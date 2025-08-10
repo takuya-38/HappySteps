@@ -6,9 +6,15 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
+    "lint": "eslint",
+    "lint:fix": "eslint --fix",
+    "format": "prettier --check",
+    "format:fix": "prettier --write",
+    "check": "npm run format && npm run lint",
+    "fix": "npm run format:fix && npm run lint:fix",
     "studio": "prisma studio",
-    "migrage": "npx prisma-case-format --file ./prisma/schema.prisma --map-table-case=snake,plural && npx prisma migrate dev && npx prisma generate"
+    "migrate": "npx prisma-case-format --file ./prisma/schema.prisma --map-table-case=snake,plural && npx prisma migrate dev && npx prisma generate",
+    "prepare": "husky"
   },
   "dependencies": {
     "@prisma/client": "^6.13.0",
@@ -24,8 +30,21 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "15.4.5",
+    "eslint-config-prettier": "^10.1.8",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.1.5",
+    "prettier": "^3.6.2",
+    "prettier-plugin-organize-imports": "^4.2.0",
+    "prettier-plugin-tailwindcss": "^0.6.14",
     "prisma": "^6.13.0",
     "tailwindcss": "^4",
     "typescript": "^5"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx,json}": [
+      "npm run lint",
+      "npm run format:fix",
+      "npm run lint:fix"
+    ]
   }
 }
