@@ -6,11 +6,11 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint",
-    "lint:fix": "eslint --fix",
-    "format": "prettier --check",
-    "format:fix": "prettier --write",
-    "check": "npm run format && npm run lint",
+    "lint": "eslint 'src/**/*.{js,jsx,ts,tsx}'",
+    "lint:fix": "eslint 'src/**/*.{js,jsx,ts,tsx}' --fix",
+    "format": "prettier . --check",
+    "format:fix": "prettier . --write",
+    "check": "npm run format && npm run lint && npx tsc",
     "fix": "npm run format:fix && npm run lint:fix",
     "studio": "prisma studio",
     "migrate": "npx prisma-case-format --file ./prisma/schema.prisma --map-table-case=snake,plural && npx prisma migrate dev && npx prisma generate",
@@ -41,10 +41,12 @@
     "typescript": "^5"
   },
   "lint-staged": {
-    "*.{js,jsx,ts,tsx,json}": [
-      "npm run lint",
-      "npm run format:fix",
-      "npm run lint:fix"
+    "*.{js,jsx,ts,tsx}": [
+      "eslint",
+      "eslint --fix"
+    ],
+    "*": [
+      "prettier --write"
     ]
   }
 }
